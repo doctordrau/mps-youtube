@@ -355,7 +355,12 @@ def stream_details(song, failcount=0, override=False, softrepeat=False):
 
         if not stream:
             raise IOError("No streams available")
-
+            
+        if Config.MPV_USE_DASH.get and config.SHOW_VIDEO.get:
+            list_update("--ytdl-format=bestvideo+bestaudio", args)
+            url = "https://www.youtube.com/watch?v=" + song.ytid
+            return (video, stream)   
+            
         return (video, stream)
 
     except (HTTPError) as e:
