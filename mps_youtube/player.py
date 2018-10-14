@@ -110,7 +110,7 @@ class BasePlayer:
 
     def seek(self):
         pass
-
+    
     def _playsong(self, failcount=0, softrepeat=False):
         """ Play song using config.PLAYER called with args config.PLAYERARGS.
 
@@ -377,3 +377,8 @@ def stream_details(song, failcount=0, override=False, softrepeat=False):
         errmsg = e.message if hasattr(e, "message") else str(e)
         g.message = c.r + str(errmsg) + c.w
         return
+
+    if Config.MPV_USE_DASH.get and Config.SHOW_VIDEO.get:
+                list_update("--ytdl-format=bestvideo+bestaudio", args)
+                url = "https://www.youtube.com/watch?v=" + song.ytid
+                return [Config.PLAYER.get] + args + [url], songdata
